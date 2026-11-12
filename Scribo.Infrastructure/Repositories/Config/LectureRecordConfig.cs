@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Scribo.Api.Models;
 
-namespace Scribo.Api.Repositories.Config
+namespace Scribo.Infrastructure.Repositories.Config
 {
     public class LectureRecordConfig : IEntityTypeConfiguration<LectureRecord>
     {

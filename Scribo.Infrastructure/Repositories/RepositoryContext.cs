@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Scribo.Api.Models;
-using Scribo.Api.Repositories.Config;
+using Scribo.Infrastructure.Repositories.Config;
 
-namespace Scribo.Api.Repositories
+namespace Scribo.Infrastructure.Repositories
 {
     public class RepositoryContext(DbContextOptions options) : DbContext(options)
     {
