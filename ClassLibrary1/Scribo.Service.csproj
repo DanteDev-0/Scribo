@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Scribo.Core\Scribo.Core.csproj" />
+  </ItemGroup>
+
 </Project>
