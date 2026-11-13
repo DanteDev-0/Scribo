@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Scribo.Service.csproj" />
     <ProjectReference Include="..\Scribo.Core\Scribo.Core.csproj" />
     <ProjectReference Include="..\Scribo.Infrastructure\Scribo.Infrastructure.csproj" />
+    <ProjectReference Include="..\Scribo.Service\Scribo.Service.csproj" />
   </ItemGroup>
 
 </Project>
