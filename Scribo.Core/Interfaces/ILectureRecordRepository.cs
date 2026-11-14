@@ -1,4 +1,4 @@
-﻿using Scribo.Api.Models;
+﻿using Scribo.Core.Models;
 
 namespace Scribo.Core.Interfaces
 {

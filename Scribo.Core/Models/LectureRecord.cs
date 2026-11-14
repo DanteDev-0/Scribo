@@ -1,4 +1,4 @@
-﻿namespace Scribo.Api.Models
+﻿namespace Scribo.Core.Models
 {
     public class LectureRecord
     {

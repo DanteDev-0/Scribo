@@ -1,5 +1,5 @@
-﻿using Scribo.Api.Models;
-using Scribo.Core.Interfaces;
+﻿using Scribo.Core.Interfaces;
+using Scribo.Core.Models;
 
 namespace Scribo.Infrastructure.Repositories
 {

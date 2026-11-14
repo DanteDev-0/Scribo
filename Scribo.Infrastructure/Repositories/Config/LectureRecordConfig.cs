@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Scribo.Api.Models;
+using Scribo.Core.Models;
 
 namespace Scribo.Infrastructure.Repositories.Config
 {

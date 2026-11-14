@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Scribo.Api.Models;
+using Scribo.Core.Models;
 using Scribo.Infrastructure.Repositories.Config;
 
 namespace Scribo.Infrastructure.Repositories
