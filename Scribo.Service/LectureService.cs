@@ -2,7 +2,6 @@
 using Scribo.Core.Dtos;
 using Scribo.Core.Interfaces;
 using Scribo.Core.Models;
-using System.Reflection.Metadata;
 
 namespace Scribo.Service
 {
@@ -31,5 +30,14 @@ namespace Scribo.Service
             return _mapper.Map<LectureRecordDto>(records);
 
         }
+
+        public LectureRecordDto GetSingleLectureRecordByCourseName(string courseName, bool trackChanges)
+        {
+            var record = _repositoryManager.LectureRecord.GetLectureRecordsByCourseName(courseName, trackChanges)
+                .SingleOrDefault() ?? throw new Exception("Kayit bulunamadi");
+
+            return _mapper.Map <LectureRecordDto>(record);
+        }
+
     }
 }

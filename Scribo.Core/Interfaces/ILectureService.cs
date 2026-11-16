@@ -8,6 +8,7 @@ namespace Scribo.Core.Interfaces
         LectureRecordDto GetSingleLectureRecord(int id,bool trackChanges);
         IEnumerable<LectureRecordDto> GetAllLectureRecordsByCourseName(string courseName,bool trackChanges);
         LectureRecordDto CreateLectureRecord(LectureRecordForCreationDto recordDto);
+        LectureRecordDto GetSingleLectureRecordByCourseName(string courseName,bool trackChanges);
 
     }
 }
