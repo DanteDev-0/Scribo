@@ -10,25 +10,25 @@ namespace Scribo.Api
     {
         private readonly IServiceManager _serviceManager = serviceManager;
 
-        [HttpGet("{courseName}")]
-        public IActionResult GetFormattedNotesByCourseName(string courseName)
+        [HttpGet]
+        public async Task<IActionResult> GetLecturesByCourse([FromQuery] string courseName,[FromQuery] DateTime? date)
         {
-            var formattedNotes = _serviceManager.LectureService.GetSingleLectureRecordByCourseName(courseName, false);
-            return Ok(formattedNotes);
+            if (string.IsNullOrWhiteSpace(courseName))
+                return BadRequest("Ders adı zorunludur.");
+
+            var records = await _serviceManager.LectureService
+                .GetAllLectureRecordsByCourseNameAsync(courseName, date, trackChanges: false);
+
+            return Ok(records);
         }
 
         [HttpPost]
-        public IActionResult CreateLectureRecord([FromForm] LectureRecordForCreationDto recordDto)
+        public async Task<IActionResult> CreateLectureRecord([FromForm] LectureRecordForCreationDto recordDto)
         {
-            
-            if (recordDto is null)
-                return BadRequest("Kayit bos olamaz");
-            
-            if (recordDto.AudioFile == null || recordDto.AudioFile.Length == 0)
-                return BadRequest("Gecerli bir ses dosyasi degil");
-            
-            var createdRecord = _serviceManager.LectureService.CreateLectureRecord(recordDto);
+            if (recordDto is null || recordDto.AudioFile is null || recordDto.AudioFile.Length == 0)
+                return BadRequest("Geçerli bir ses dosyası yüklemelisiniz.");
 
+            var createdRecord = await _serviceManager.LectureService.CreateLectureRecordAsync(recordDto);
             return StatusCode(201, createdRecord);
         }
     }
