@@ -4,7 +4,7 @@ namespace Scribo.Core.Interfaces
 {
     public interface ILectureRecordRepository : IReadRepository<LectureRecord>, ICreateRepository<LectureRecord>
     {
-        LectureRecord? GetSingleLectureRecord(int id, bool trackChanges);
-        IQueryable<LectureRecord> GetLectureRecordsByCourseName(string courseName, bool trackChanges);
+        Task<LectureRecord?> GetSingleLectureRecordAsync(int id, bool trackChanges);
+        Task<IEnumerable<LectureRecord>> GetLectureRecordsByCourseAsync(string courseName, DateTime? date, bool trackChanges);
     }
 }

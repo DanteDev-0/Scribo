@@ -4,7 +4,7 @@ namespace Scribo.Core.Interfaces
 {
     public interface IReadRepository<T>
     {
-        IQueryable<T> FindAll(bool trackChanges);
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges);
+        IQueryable<T> FindAllAsync(bool trackChanges);
+        IQueryable<T> FindByConditionAsync(Expression<Func<T, bool>> expression, bool trackChanges);
     }
 }

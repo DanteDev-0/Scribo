@@ -5,38 +5,43 @@ using Scribo.Core.Models;
 
 namespace Scribo.Service
 {
-    public class LectureService(IRepositoryManager repositoryManager,IMapper mapper) : ILectureService
+    public class LectureService(IRepositoryManager repositoryManager,IMapper mapper, 
+        IAudioTranscriptionService transcriptionService, ITextSummarizationService summarizationService) : ILectureService
     {
         private readonly IRepositoryManager _repositoryManager = repositoryManager;
         private readonly IMapper _mapper = mapper;
+        private readonly IAudioTranscriptionService _transcriptionService = transcriptionService;
+        private readonly ITextSummarizationService _summarizationService = summarizationService;
 
-        public LectureRecordDto CreateLectureRecord(LectureRecordForCreationDto recordDto)
+        public async Task<LectureRecordDto> CreateLectureRecordAsync(LectureRecordForCreationDto recordDto)
         {
-            var records = _mapper.Map<LectureRecord>(recordDto);
-            _repositoryManager.LectureRecord.Create(records);
-            _repositoryManager.Save();
-            return _mapper.Map<LectureRecordDto>(records);
+            var rawTranscript = await _transcriptionService.TranscribeAudioAsync(recordDto.AudioFile);
+         
+            var formattedNotes = await _summarizationService.SummarizeLectureAsync(
+                rawTranscript,
+                recordDto.CourseName,
+                recordDto.Subject);
+
+            var entity = _mapper.Map<LectureRecord>(recordDto);
+            entity.FormattedNotes = formattedNotes;
+
+            _repositoryManager.LectureRecord.Create(entity);
+            await _repositoryManager.SaveAsync(); 
+
+            return _mapper.Map<LectureRecordDto>(entity);
         }
 
-        public IEnumerable<LectureRecordDto> GetAllLectureRecordsByCourseName(string courseName, bool trackChanges)
+        public async Task<IEnumerable<LectureRecordDto>> GetAllLectureRecordsByCourseNameAsync(string courseName, DateTime? date, bool trackChanges)
         {
-            var records = _repositoryManager.LectureRecord.GetLectureRecordsByCourseName(courseName, trackChanges) ?? throw new Exception("kayit bulunamadi");
+            var records = await _repositoryManager.LectureRecord.GetLectureRecordsByCourseAsync(courseName, date, trackChanges);
             return _mapper.Map<IEnumerable<LectureRecordDto>>(records);
         }
 
-        public LectureRecordDto GetSingleLectureRecord(int id, bool trackChanges)
+        public async Task<LectureRecordDto> GetSingleLectureRecordAsync(int id, bool trackChanges)
         {
-            var records = _repositoryManager.LectureRecord.GetSingleLectureRecord(id, trackChanges) ?? throw new Exception("Kayit bulunamadi");
+            var records = await _repositoryManager.LectureRecord.GetSingleLectureRecordAsync(id, trackChanges) ?? throw new Exception("Kayit bulunamadi");
             return _mapper.Map<LectureRecordDto>(records);
 
-        }
-
-        public LectureRecordDto GetSingleLectureRecordByCourseName(string courseName, bool trackChanges)
-        {
-            var record = _repositoryManager.LectureRecord.GetLectureRecordsByCourseName(courseName, trackChanges)
-                .SingleOrDefault() ?? throw new Exception("Kayit bulunamadi");
-
-            return _mapper.Map <LectureRecordDto>(record);
         }
 
     }

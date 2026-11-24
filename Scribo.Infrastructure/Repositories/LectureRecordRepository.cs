@@ -1,4 +1,5 @@
-﻿using Scribo.Core.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Scribo.Core.Interfaces;
 using Scribo.Core.Models;
 
 namespace Scribo.Infrastructure.Repositories
@@ -6,11 +7,23 @@ namespace Scribo.Infrastructure.Repositories
     public class LectureRecordRepository(RepositoryContext context) : RepositoryBase<LectureRecord>(context), ILectureRecordRepository
     {
         public void CreateLectureRecord(LectureRecord record) => Create(record);
+        public async Task<IEnumerable<LectureRecord>> GetLectureRecordsByCourseAsync(string courseName, DateTime? date, bool trackChanges)
+        {
+            var query = FindByConditionAsync(r => r.CourseName == courseName, trackChanges);
 
-        public IQueryable<LectureRecord> GetLectureRecordsByCourseName(string courseName, bool trackChanges) =>
-            FindByCondition(l=> l.CourseName == courseName,trackChanges);
-        
-        public LectureRecord? GetSingleLectureRecord(int id, bool trackChanges) =>
-            FindByCondition(l => l.Id.Equals(id), trackChanges).SingleOrDefault();
+            if (date.HasValue)
+            {
+                var startOfDay = date.Value.Date;
+                var endOfDay = startOfDay.AddDays(1);
+
+                query = query.Where(q => q.CreatedAt >= startOfDay && q.CreatedAt < endOfDay);
+            }
+
+            return await query.OrderByDescending(r => r.CreatedAt).ToListAsync();
+
+                
+        }
+        public async Task<LectureRecord?> GetSingleLectureRecordAsync(int id, bool trackChanges) =>
+           await FindByConditionAsync(l => l.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
     }
 }

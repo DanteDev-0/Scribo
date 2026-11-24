@@ -1,14 +1,14 @@
 ﻿using Scribo.Core.Dtos;
-using Scribo.Core.Models;
+
+
 
 namespace Scribo.Core.Interfaces
 {
     public interface ILectureService
     {
-        LectureRecordDto GetSingleLectureRecord(int id,bool trackChanges);
-        IEnumerable<LectureRecordDto> GetAllLectureRecordsByCourseName(string courseName,bool trackChanges);
-        LectureRecordDto CreateLectureRecord(LectureRecordForCreationDto recordDto);
-        LectureRecordDto GetSingleLectureRecordByCourseName(string courseName,bool trackChanges);
+        Task<LectureRecordDto> GetSingleLectureRecordAsync(int id,bool trackChanges);
+        Task<IEnumerable<LectureRecordDto>> GetAllLectureRecordsByCourseNameAsync(string courseName,DateTime? date,bool trackChanges);
+        Task<LectureRecordDto> CreateLectureRecordAsync(LectureRecordForCreationDto recordDto);
 
     }
 }

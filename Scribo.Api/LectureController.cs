@@ -17,7 +17,7 @@ namespace Scribo.Api
                 return BadRequest("Ders adı zorunludur.");
 
             var records = await _serviceManager.LectureService
-                .GetAllLectureRecordsByCourseNameAsync(courseName, date, trackChanges: false);
+                .GetAllLectureRecordsByCourseNameAsync(courseName, date, false);
 
             return Ok(records);
         }

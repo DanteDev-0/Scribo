@@ -8,10 +8,10 @@ namespace Scribo.Infrastructure.Repositories
     {
         protected RepositoryContext _context = context;
 
-        public IQueryable<T> FindAll(bool trackChanges) =>
+        public IQueryable<T> FindAllAsync(bool trackChanges) =>
             !trackChanges ? _context.Set<T>().AsNoTracking() : _context.Set<T>();
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+        public IQueryable<T> FindByConditionAsync(Expression<Func<T, bool>> expression, bool trackChanges) =>
             !trackChanges ? _context.Set<T>().Where(expression).AsNoTracking() : _context.Set<T>().Where(expression);
 
         public void Create(T entity) => _context.Set<T>().Add(entity);

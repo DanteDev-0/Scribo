@@ -3,6 +3,6 @@
     public interface IRepositoryManager
     {
         ILectureRecordRepository LectureRecord { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

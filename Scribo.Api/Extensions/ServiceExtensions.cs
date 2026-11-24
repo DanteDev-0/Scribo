@@ -9,6 +9,7 @@ namespace Scribo.Api.Extensions
 {
     public static class ServiceExtensions
     {
+        public const string FrontendCorsPolicy = "AllowFrontend";
         public static void ConfigureSqlContext(this IServiceCollection services,IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
@@ -38,9 +39,7 @@ namespace Scribo.Api.Extensions
 
         //    return services;
         //}
-        public static IServiceCollection ConfigureOpenAiServices(
-    this IServiceCollection services,
-    IConfiguration configuration)
+        public static IServiceCollection ConfigureOpenAiServices(this IServiceCollection services,IConfiguration configuration)
         {
             var openAiKey = configuration["OpenAI:ApiKey"];
 
@@ -59,6 +58,20 @@ namespace Scribo.Api.Extensions
             services.AddScoped<ITextSummarizationService, GptSummarizationService>();
 
             return services;
+        }
+        public static IServiceCollection ConfigureCors(this IServiceCollection services)
+        {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(FrontendCorsPolicy, policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5173")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+                });
+
+                return services;
         }
     }
 }

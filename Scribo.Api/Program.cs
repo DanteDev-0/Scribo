@@ -14,6 +14,8 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Scribo.Service.Utils.MappingProfile).Assembly);
 builder.Services.ConfigureOpenAiServices(builder.Configuration);
+builder.Services.ConfigureCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -9,7 +9,8 @@ namespace Scribo.Infrastructure.Repositories
         private readonly Lazy<ILectureRecordRepository> _lectureRecordRepository = new(() => new LectureRecordRepository(context));
 
         public ILectureRecordRepository LectureRecord => _lectureRecordRepository.Value;
-        public void Save() => _context.SaveChanges();
+        public Task SaveAsync() => _context.SaveChangesAsync();
+        
     }
 }
 

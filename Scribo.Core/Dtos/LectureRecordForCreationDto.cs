@@ -2,7 +2,7 @@
 
 namespace Scribo.Core.Dtos
 {
-    public class LectureRecordForCreationDto
+    public record LectureRecordForCreationDto
     {
         public string CourseName { get; init; } = string.Empty;
         public string Subject { get; init; } = string.Empty;
