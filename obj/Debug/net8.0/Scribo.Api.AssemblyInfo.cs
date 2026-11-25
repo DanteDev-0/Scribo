@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Scribo.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e454364a044f12409404885126e8775e8704f825")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+699b3fc84887a275b6b19c6d5b45cdb45516d738")]
 [assembly: System.Reflection.AssemblyProductAttribute("Scribo.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Scribo.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
